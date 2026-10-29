@@ -1,97 +1,539 @@
 {
   "profiles": [
-    { "id": "p1", "name": "Avery Stone", "age": 29, "city": "Miami", "bio": "Fake person. Loves sunrise walks and bad puns.", "interests": ["walking", "coffee", "puns"], "lookingFor": "Someone to try new cafes with", "color": "#4b36d9",
+    {
+      "id": "p1",
+      "name": "Avery Stone",
+      "age": 29,
+      "city": "US East",
+      "bio": "Fake player. I build way too many cozy cottages and then forget where I put them.",
+      "interests": [
+        "cottagecore",
+        "terraforming",
+        "shaders"
+      ],
+      "lookingFor": "A chill survival partner for a long-term world",
+      "color": "#4b36d9",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "A long walk, a flat white, and a book I will not finish." },
-        { "question": "I'm weirdly good at", "answer": "Finding the best parking spot on the first try." },
-        { "question": "We'll get along if", "answer": "You laugh at puns, even the groaners." }
-      ] },
-    { "id": "p2", "name": "Jordan Reyes", "age": 32, "city": "Miami Beach", "bio": "Fake person. Makes a very average paella.", "interests": ["cooking", "beach", "podcasts"], "lookingFor": "A relaxed, funny partner", "color": "#d9634b",
+        {
+          "question": "My dream build",
+          "answer": "A whole village on stilts over a mangrove swamp."
+        },
+        {
+          "question": "My first night strategy",
+          "answer": "Dirt hut, bed, panic."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You don't mind me renovating your house while you're offline."
+        }
+      ],
+      "gamertag": "AveryBuilds",
+      "edition": "Java",
+      "platforms": [
+        "PC"
+      ],
+      "modes": [
+        "Survival",
+        "Creative",
+        "SMP"
+      ],
+      "playstyle": "Builder",
+      "mic": true
+    },
+    {
+      "id": "p2",
+      "name": "Jordan Reyes",
+      "age": 32,
+      "city": "US East",
+      "bio": "Fake player. Runs the food supply on every server I join.",
+      "interests": [
+        "Create mod",
+        "farms",
+        "villager trading"
+      ],
+      "lookingFor": "People for a modded SMP, weeknights",
+      "color": "#d9634b",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "Beach in the morning, cooking for friends at night." },
-        { "question": "I'm weirdly good at", "answer": "Remembering what everyone ordered at a restaurant." },
-        { "question": "We'll get along if", "answer": "You will taste my paella and be kind about it." }
-      ] },
-    { "id": "p3", "name": "Sam Okafor", "age": 27, "city": "Coral Gables", "bio": "Fake person. Board game champion of nobody.", "interests": ["board games", "hiking", "jazz"], "lookingFor": "A game night buddy", "color": "#3f8f3a",
+        {
+          "question": "I'm weirdly good at",
+          "answer": "Getting villagers to give me Mending for one emerald."
+        },
+        {
+          "question": "The mod I can't play without",
+          "answer": "Farmer's Delight. Obviously."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You will eat the food I cook and be kind about it."
+        }
+      ],
+      "gamertag": "PaellaPickaxe",
+      "edition": "Both",
+      "platforms": [
+        "Xbox",
+        "PC"
+      ],
+      "modes": [
+        "Survival",
+        "Modded",
+        "SMP"
+      ],
+      "playstyle": "Farmer",
+      "mic": true
+    },
+    {
+      "id": "p3",
+      "name": "Sam Okafor",
+      "age": 27,
+      "city": "US Central",
+      "bio": "Fake player. If it can be automated, I've automated it. Twice.",
+      "interests": [
+        "redstone",
+        "tech",
+        "farms"
+      ],
+      "lookingFor": "A builder to make my machines look less ugly",
+      "color": "#3f8f3a",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "A short hike, then a board game that takes three hours." },
-        { "question": "I'm weirdly good at", "answer": "Reading the rules so nobody else has to." },
-        { "question": "We'll get along if", "answer": "You do not flip the table when you lose." }
-      ] },
-    { "id": "p4", "name": "Riley Chen", "age": 35, "city": "Miami", "bio": "Fake person. Collects houseplants and names them.", "interests": ["plants", "yoga", "movies"], "lookingFor": "Something calm and kind", "color": "#c28a1c",
+        {
+          "question": "I'm weirdly good at",
+          "answer": "Reading the wiki so nobody else has to."
+        },
+        {
+          "question": "My dream build",
+          "answer": "A fully automatic sorting system for every item in the game."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You don't break my observer chains."
+        }
+      ],
+      "gamertag": "SamTheRuleBook",
+      "edition": "Java",
+      "platforms": [
+        "PC"
+      ],
+      "modes": [
+        "Redstone",
+        "Skyblock",
+        "Survival"
+      ],
+      "playstyle": "Redstoner",
+      "mic": false
+    },
+    {
+      "id": "p4",
+      "name": "Riley Chen",
+      "age": 35,
+      "city": "US East",
+      "bio": "Fake player. Plants every flower in the game around my base. Every single one.",
+      "interests": [
+        "gardens",
+        "bees",
+        "interiors"
+      ],
+      "lookingFor": "Something calm, no PvP please",
+      "color": "#c28a1c",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "Water the plants, stretch, watch a movie I have seen ten times." },
-        { "question": "I'm weirdly good at", "answer": "Keeping a fern alive for five years." },
-        { "question": "We'll get along if", "answer": "You do not mind a very green apartment." }
-      ] },
-    { "id": "p5", "name": "Casey Morgan", "age": 41, "city": "Fort Lauderdale", "bio": "Fake person. Weekend sailor, weekday spreadsheet fan.", "interests": ["sailing", "spreadsheets", "tacos"], "lookingFor": "A co-pilot for weekends", "color": "#2a7fb8",
+        {
+          "question": "My dream build",
+          "answer": "A greenhouse with every plant, labeled with signs."
+        },
+        {
+          "question": "I'm weirdly good at",
+          "answer": "Keeping bees alive."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You don't mind a very green base."
+        }
+      ],
+      "gamertag": "FernKeeper",
+      "edition": "Bedrock",
+      "platforms": [
+        "Switch",
+        "Mobile"
+      ],
+      "modes": [
+        "Creative",
+        "Survival"
+      ],
+      "playstyle": "Chill",
+      "mic": false
+    },
+    {
+      "id": "p5",
+      "name": "Casey Morgan",
+      "age": 41,
+      "city": "US East",
+      "bio": "Fake player. Hardcore only. I've lost 14 worlds and I regret nothing.",
+      "interests": [
+        "ocean monuments",
+        "maps",
+        "boats"
+      ],
+      "lookingFor": "A hardcore duo who can keep their nerve",
+      "color": "#2a7fb8",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "On the water by 8, tacos by 1, nap by 2." },
-        { "question": "I'm weirdly good at", "answer": "Making a budget for a trip that is still a daydream." },
-        { "question": "We'll get along if", "answer": "You can steer a small boat or hold a map." }
-      ] },
-    { "id": "p6", "name": "Taylor Brooks", "age": 26, "city": "Miami", "bio": "Fake person. Learning guitar, still only knows three chords.", "interests": ["guitar", "running", "tacos"], "lookingFor": "A fun, honest match", "color": "#b8326f",
+        {
+          "question": "My worst creeper disaster",
+          "answer": "Day 212, hardcore, opened my front door. That was it."
+        },
+        {
+          "question": "My first night strategy",
+          "answer": "Boat out to sea and wait for sunrise."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You keep a log of coordinates."
+        }
+      ],
+      "gamertag": "SpreadsheetSailor",
+      "edition": "Java",
+      "platforms": [
+        "PC",
+        "Mac"
+      ],
+      "modes": [
+        "Hardcore",
+        "Survival"
+      ],
+      "playstyle": "Explorer",
+      "mic": true
+    },
+    {
+      "id": "p6",
+      "name": "Taylor Brooks",
+      "age": 30,
+      "city": "US West",
+      "bio": "Fake player. Bedwars rusher. I will bridge to your base in 9 seconds.",
+      "interests": [
+        "Bedwars",
+        "clutches",
+        "speed bridging"
+      ],
+      "lookingFor": "A Bedwars squad that actually defends",
+      "color": "#b8326f",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "A morning run and a loud afternoon with my guitar." },
-        { "question": "I'm weirdly good at", "answer": "Knowing every taco truck within five miles." },
-        { "question": "We'll get along if", "answer": "You can listen to the same three chords with a straight face." }
-      ] },
-    { "id": "p7", "name": "Morgan Ellis", "age": 38, "city": "Hialeah", "bio": "Fake person. Will talk about bread for hours.", "interests": ["baking", "gardening", "history"], "lookingFor": "A good listener", "color": "#6d4bd9",
+        {
+          "question": "I'm weirdly good at",
+          "answer": "Clutching with a water bucket."
+        },
+        {
+          "question": "Server I keep going back to",
+          "answer": "Any server with a Bedwars queue under 10 seconds."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You protect the bed while I go rush."
+        }
+      ],
+      "gamertag": "TacoTNT",
+      "edition": "Bedrock",
+      "platforms": [
+        "PlayStation",
+        "Mobile"
+      ],
+      "modes": [
+        "Bedwars",
+        "Minigames",
+        "PvP"
+      ],
+      "playstyle": "Fighter",
+      "mic": true
+    },
+    {
+      "id": "p7",
+      "name": "Morgan Ellis",
+      "age": 26,
+      "city": "Europe",
+      "bio": "Fake player. Personal best is not good enough yet. Never will be.",
+      "interests": [
+        "any%",
+        "seeds",
+        "practice maps"
+      ],
+      "lookingFor": "Someone to race seeds against",
+      "color": "#6d4bd9",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "Sourdough in the oven and tomatoes in the garden." },
-        { "question": "I'm weirdly good at", "answer": "Remembering dates from history class." },
-        { "question": "We'll get along if", "answer": "You ask me about bread and mean it." }
-      ] },
-    { "id": "p8", "name": "Dana Whitfield", "age": 45, "city": "Key Biscayne", "bio": "Fake person. Reads a book a week and lies about it being two.", "interests": ["books", "swimming", "wine"], "lookingFor": "A long-term partner", "color": "#1c8a7a",
+        {
+          "question": "My first night strategy",
+          "answer": "There is no night. Nether by minute 4."
+        },
+        {
+          "question": "I'm weirdly good at",
+          "answer": "Finding strongholds with two eyes."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You don't talk during the blaze rods."
+        }
+      ],
+      "gamertag": "EllisSpeedruns",
+      "edition": "Java",
+      "platforms": [
+        "PC"
+      ],
+      "modes": [
+        "Speedrunning",
+        "Hardcore"
+      ],
+      "playstyle": "Speedrunner",
+      "mic": true
+    },
+    {
+      "id": "p8",
+      "name": "Dana Whitfield",
+      "age": 38,
+      "city": "Canada",
+      "bio": "Fake player. Strip miner at heart. My base is under bedrock level, basically.",
+      "interests": [
+        "caves",
+        "diamonds",
+        "Mekanism"
+      ],
+      "lookingFor": "A teammate who handles the surface stuff",
+      "color": "#1c8a7a",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "Swim at dawn, then a book on the porch until dinner." },
-        { "question": "I'm weirdly good at", "answer": "Picking a wine by the label and being right." },
-        { "question": "We'll get along if", "answer": "You like quiet evenings and good stories." }
-      ] },
-    { "id": "p9", "name": "Quinn Alvarez", "age": 31, "city": "Wynwood", "bio": "Fake person. Muralist on weekends, barista on weekdays.", "interests": ["art", "coffee", "bikes"], "lookingFor": "Someone creative", "color": "#d94b8f",
+        {
+          "question": "My dream build",
+          "answer": "A giant underground city lit by glowstone."
+        },
+        {
+          "question": "I'm weirdly good at",
+          "answer": "Finding diamonds at Y=-58."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You leave torches on the right wall."
+        }
+      ],
+      "gamertag": "DanaDigsDeep",
+      "edition": "Both",
+      "platforms": [
+        "PC",
+        "Xbox"
+      ],
+      "modes": [
+        "Survival",
+        "Modded"
+      ],
+      "playstyle": "Miner",
+      "mic": false
+    },
+    {
+      "id": "p9",
+      "name": "Quinn Alvarez",
+      "age": 28,
+      "city": "US East",
+      "bio": "Fake player. Pixel art and giant statues. If it's big, I've built it.",
+      "interests": [
+        "pixel art",
+        "statues",
+        "Axiom"
+      ],
+      "lookingFor": "Builders for a roleplay city project",
+      "color": "#d94b8f",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "Bike to a wall, paint until the light is gone." },
-        { "question": "I'm weirdly good at", "answer": "Drawing a cat in under ten seconds." },
-        { "question": "We'll get along if", "answer": "You will hold the ladder and tell me the truth about the colors." }
-      ] },
-    { "id": "p10", "name": "Jamie Patel", "age": 28, "city": "Brickell", "bio": "Fake person. Climbs walls, falls off couches.", "interests": ["climbing", "sushi", "travel"], "lookingFor": "An adventure friend first", "color": "#8a6a1c",
+        {
+          "question": "My dream build",
+          "answer": "A 1:1 city with working trains."
+        },
+        {
+          "question": "Server I keep going back to",
+          "answer": "Small whitelisted SMPs with friends."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You like murals made of concrete blocks."
+        }
+      ],
+      "gamertag": "QuinnPaintsPixels",
+      "edition": "Java",
+      "platforms": [
+        "PC"
+      ],
+      "modes": [
+        "Creative",
+        "SMP",
+        "Roleplay"
+      ],
+      "playstyle": "Builder",
+      "mic": true
+    },
+    {
+      "id": "p10",
+      "name": "Jamie Patel",
+      "age": 33,
+      "city": "US West",
+      "bio": "Fake player. Weekend survival, weeknight minigames. Mostly here for vibes.",
+      "interests": [
+        "Realms",
+        "minigames",
+        "pets"
+      ],
+      "lookingFor": "A Realm with nice people",
+      "color": "#8a6a1c",
       "prompts": [
-        { "question": "My ideal Sunday", "answer": "Climbing gym, sushi, then a map of the next trip." },
-        { "question": "I'm weirdly good at", "answer": "Packing a bag for a week in one small carry-on." },
-        { "question": "We'll get along if", "answer": "You say yes to a spontaneous road trip." }
-      ] }
+        {
+          "question": "My worst creeper disaster",
+          "answer": "It blew up my dog's house. The dog was fine. I was not."
+        },
+        {
+          "question": "My first night strategy",
+          "answer": "Bed, then stare at sheep."
+        },
+        {
+          "question": "We'll get along if",
+          "answer": "You name all your pets."
+        }
+      ],
+      "gamertag": "JamieJustChillin",
+      "edition": "Bedrock",
+      "platforms": [
+        "Xbox",
+        "Switch"
+      ],
+      "modes": [
+        "Survival",
+        "Minigames",
+        "Skyblock"
+      ],
+      "playstyle": "Chill",
+      "mic": true
+    }
   ],
   "likes": [
-    { "from": "p2", "to": "p1" },
-    { "from": "p3", "to": "p1" },
-    { "from": "p4", "to": "p1" },
-    { "from": "p1", "to": "p4" },
-    { "from": "p5", "to": "p6" },
-    { "from": "p5", "to": "p1" },
-    { "from": "p8", "to": "p1" },
-    { "from": "p1", "to": "p9" },
-    { "from": "p9", "to": "p1" },
-    { "from": "p1", "to": "p10" },
-    { "from": "p10", "to": "p1" },
-    { "from": "p2", "to": "p6" },
-    { "from": "p6", "to": "p2" }
+    {
+      "from": "p2",
+      "to": "p1"
+    },
+    {
+      "from": "p3",
+      "to": "p1"
+    },
+    {
+      "from": "p4",
+      "to": "p1"
+    },
+    {
+      "from": "p1",
+      "to": "p4"
+    },
+    {
+      "from": "p5",
+      "to": "p6"
+    },
+    {
+      "from": "p5",
+      "to": "p1"
+    },
+    {
+      "from": "p8",
+      "to": "p1"
+    },
+    {
+      "from": "p1",
+      "to": "p9"
+    },
+    {
+      "from": "p9",
+      "to": "p1"
+    },
+    {
+      "from": "p1",
+      "to": "p10"
+    },
+    {
+      "from": "p10",
+      "to": "p1"
+    },
+    {
+      "from": "p2",
+      "to": "p6"
+    },
+    {
+      "from": "p6",
+      "to": "p2"
+    }
   ],
   "passes": [
-    { "from": "p1", "to": "p7" }
+    {
+      "from": "p1",
+      "to": "p7"
+    }
   ],
   "matches": [
-    { "id": "m1", "a": "p1", "b": "p4" },
-    { "id": "m2", "a": "p1", "b": "p9" },
-    { "id": "m3", "a": "p1", "b": "p10" },
-    { "id": "m4", "a": "p2", "b": "p6" }
+    {
+      "id": "m1",
+      "a": "p1",
+      "b": "p4"
+    },
+    {
+      "id": "m2",
+      "a": "p1",
+      "b": "p9"
+    },
+    {
+      "id": "m3",
+      "a": "p1",
+      "b": "p10"
+    },
+    {
+      "id": "m4",
+      "a": "p2",
+      "b": "p6"
+    }
   ],
   "messages": [
-    { "id": "msg1", "matchId": "m1", "from": "p4", "text": "Hi Avery! Your bio made me laugh.", "at": "2026-10-28T18:00:00.000Z" },
-    { "id": "msg2", "matchId": "m1", "from": "p1", "text": "Thanks Riley! What are your plants called?", "at": "2026-10-28T18:05:00.000Z" },
-    { "id": "msg3", "matchId": "m1", "from": "p4", "text": "Gary, Gary Jr. and Kevin.", "at": "2026-10-28T18:07:00.000Z" },
-    { "id": "msg4", "matchId": "m2", "from": "p9", "text": "Your Sunday sounds like mine. Do you like murals?", "at": "2026-10-29T09:12:00.000Z" },
-    { "id": "msg5", "matchId": "m2", "from": "p1", "text": "I do! Show me your favorite wall in Wynwood.", "at": "2026-10-29T09:30:00.000Z" },
-    { "id": "msg6", "matchId": "m4", "from": "p6", "text": "Do you know a good taco truck?", "at": "2026-10-27T20:15:00.000Z" },
-    { "id": "msg7", "matchId": "m4", "from": "p2", "text": "I know three. Pick a day.", "at": "2026-10-27T20:40:00.000Z" }
+    {
+      "id": "msg1",
+      "matchId": "m1",
+      "from": "p4",
+      "text": "Hi Avery! Your village on stilts idea sounds amazing.",
+      "at": "2026-10-28T18:00:00.000Z"
+    },
+    {
+      "id": "msg2",
+      "matchId": "m1",
+      "from": "p1",
+      "text": "Thanks! Are you on Java? I'm happy to hop on Bedrock for you.",
+      "at": "2026-10-28T18:05:00.000Z"
+    },
+    {
+      "id": "msg3",
+      "matchId": "m1",
+      "from": "p4",
+      "text": "Bedrock on Switch. I'll bring the bees.",
+      "at": "2026-10-28T18:07:00.000Z"
+    },
+    {
+      "id": "msg4",
+      "matchId": "m2",
+      "from": "p9",
+      "text": "Want to help with the train station in my city build?",
+      "at": "2026-10-29T09:12:00.000Z"
+    },
+    {
+      "id": "msg5",
+      "matchId": "m2",
+      "from": "p1",
+      "text": "Yes! Send me the server IP and I'll be on tonight.",
+      "at": "2026-10-29T09:30:00.000Z"
+    },
+    {
+      "id": "msg6",
+      "matchId": "m4",
+      "from": "p6",
+      "text": "Bedwars tonight? I'll rush, you farm iron.",
+      "at": "2026-10-27T20:15:00.000Z"
+    },
+    {
+      "id": "msg7",
+      "matchId": "m4",
+      "from": "p2",
+      "text": "Only if you promise to come back and defend this time.",
+      "at": "2026-10-27T20:40:00.000Z"
+    }
   ]
 }

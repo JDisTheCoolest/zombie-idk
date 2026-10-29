@@ -5,8 +5,8 @@ import Sponsors from "@/components/Sponsors";
 import PretendPicker from "@/components/PretendPicker";
 
 export const metadata: Metadata = {
-  title: "Zombie Match",
-  description: "A half-built dating app. Bring it back to life.",
+  title: "Mine Match",
+  description: "Find people to play Minecraft with. Survival, SMP, Bedwars, modded and more.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,19 +14,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <div className="zombie-bar">
-          🧟 Zombie build: it half works. Read ZOMBIE.md for what to fix.
+          ⛏ Mine Match is still being built. Read ZOMBIE.md for what to fix.
         </div>
         <nav className="nav">
-          <Link href="/" className="brand">Zombie Match</Link>
-          <Link href="/">Discover</Link>
-          <Link href="/matches">Matches</Link>
-          <Link href="/likes">Who liked you</Link>
+          <Link href="/" className="brand"><span className="brand-block" aria-hidden="true" />Mine Match</Link>
+          <Link href="/">Find players</Link>
+          <Link href="/matches">Squad</Link>
+          <Link href="/likes">Requests</Link>
           <Link href="/profile">My profile</Link>
           <Link href="/pricing">Pricing</Link>
           <PretendPicker />
         </nav>
         <main>{children}</main>
         <Sponsors />
+        <p className="muted small" style={{ textAlign: "center", margin: "0 16px 32px" }}>
+          Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+        </p>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
 
-// Prices are placeholders at roughly half of typical paid dating tiers.
+// Prices are placeholders.
 // ZOMBIE: no prices yet. Pick your prices, create matching Prices in Stripe (test mode),
 // and show them here.
 const PLANS = [
-  { id: "plus", name: "Plus", price: "Set your price", perks: ["Unlimited likes", "5 Super likes a week", "Distance and age filters"] },
-  { id: "premium", name: "Premium", price: "Set your price", perks: ["Everything in Plus", "See who liked you", "Unlimited Super likes"] },
+  { id: "plus", name: "Iron", price: "Set your price", perks: ["Unlimited team-ups", "5 Diamond invites a week", "Featured on Find players"] },
+  { id: "premium", name: "Netherite", price: "Set your price", perks: ["Everything in Iron", "See who wants to team up", "Unlimited Diamond invites"] },
 ];
 
 export default function PricingPage() {
@@ -29,7 +29,7 @@ export default function PricingPage() {
       <div className="page-head">
         <div>
           <h1>Pricing</h1>
-          <p className="sub">Half the price of the tool you&apos;re used to. Once Stripe works.</p>
+          <p className="sub">Free to play. Upgrades unlock once Stripe works.</p>
         </div>
       </div>
       <div className="grid">

@@ -1,12 +1,10 @@
-# Zombie Match
+# Mine Match ⛏
 
-> A half-built copy of **Hinge / Tinder paid tiers**. It runs, it kind of works, and it is not ready for real users.
-> Your job tonight: bring it back to life.
+> Find people to play Minecraft with. Pick your edition, platform and favorite modes, then team up with players who want the same thing: a hardcore duo, a modded SMP crew, a Bedwars squad, a builder for your city project.
 
-**Replaces:** Hinge and Tinder paid plans (paid plans)
+Started from the [Zombie Match](https://github.com/richmondbtaylor/zombie-match) hackathon starter (a half-built Hinge / Tinder copy) and reworked into a Minecraft teammate finder.
 
-**Live demo:** https://zombie-match.vercel.app (a shared demo: data resets whenever the server restarts)
-<!-- Price not verified: hinge.co/preferred returned 404 and the Hinge help center returned 403 on 2026-10-29. Dating apps hide or vary prices, so no number is claimed. -->
+Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
 
 ## Run it (2 minutes)
 
@@ -21,32 +19,19 @@ Open http://localhost:3105.
 
 ## What works
 
-- A "Pretend to be" dropdown in the top bar picks who you are (there are no real accounts).
-- Create a profile or edit the one you are pretending to be: name, age, city, bio, interests, looking for.
-- Profile prompts: every profile answers 3 prompts picked from a list ("My ideal Sunday", "I'm weirdly good at", "We'll get along if", and more). Edit them on My profile and see a live preview of your card.
-- Discover: a big card with a color "photo" block, name, age, city, prompts and interests. Like, Pass and Super like buttons.
-- A mutual like makes a match. Try it: pretend to be Avery Stone and like Jordan Reyes. Jordan already liked Avery.
-- Matches page: each match shows the last message and its time, newest first. Unmatch a person with one click.
-- Chat per match (messages are saved in `data/db.json`).
-- Who liked you: a paid page that shows blurred cards and an "Upgrade to see who liked you" button. The button hits the Stripe stub and gets a 501.
-- Pricing page (Stripe is not connected).
-- 10 fake adult profiles (ages 25 to 45) in `data/seed.json`. Everyone is made up.
+- **Player profiles:** gamertag, age, region, edition (Java, Bedrock or both), platforms, modes you play, playstyle, voice chat, a bio and 3 Minecraft prompts ("My dream build", "My worst creeper disaster"...). Live preview of your card while you edit.
+- **Find players:** one card at a time with Skip, Team up and 💎 Diamond invite. Filter by mode, or show only players whose edition you can join. Players with the most modes in common with you come first, and the shared modes are highlighted.
+- **Squad:** if you both hit Team up, you're teammates. Each one shows the last message. Remove someone with one click.
+- **Chat** with each teammate (saved in `data/db.json`).
+- **Age rules:** under 13 can't sign up. Players 13 to 17 only see and reach other 13 to 17 year olds, and adults only see adults. This is enforced on the server, not just in the page.
+- **Requests:** a paid page with blurred cards of who wants to team up with you. Pricing page with Iron and Netherite plans (Stripe is not connected yet).
+- A "Pretend to be" dropdown picks who you are (there are no real accounts yet). Try it: be Avery Stone and team up with Jordan Reyes, who already wants to team up with Avery.
+- 10 fake adult players in `data/seed.json`. Everyone is made up.
 
 ## What's broken
 
-See [ZOMBIE.md](ZOMBIE.md). That's the to-do list for the night. It starts with the safety holes, because they matter most for a dating app.
-
-## How we build tonight
-
-- **Mel** ([openmel.dev](https://openmel.dev)) does the building. Open this folder in Mel and give it tasks from ZOMBIE.md.
-- **Prompt Anything** ([promptanything.io](https://www.promptanything.io)) writes the prompts. Use it inside Mel for features, agents, customer success flows, code fixes and reading this repo.
-- **MEL.md** in this folder tells Mel's agents what this project is and how to work on it.
-
-## Submit
-
-Fork this repo, push your work, and send your link through the submission form before the deadline.
-Many people can pick the same app. The one that actually works wins.
+See [ZOMBIE.md](ZOMBIE.md): real login, block and report, private messages, age verification, Stripe and deploying. Safety items come first, because lots of Minecraft players are kids.
 
 ## License
 
-MIT. Use it, ship it, share it.
+MIT.

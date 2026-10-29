@@ -21,7 +21,7 @@ export default function MatchesPage() {
   useEffect(() => { load(); }, [load]);
 
   async function unmatch(row: Row) {
-    if (!window.confirm(`Unmatch with ${row.other.name}? The chat will be hidden.`)) return;
+    if (!window.confirm(`Remove ${row.other.name} from your squad? The chat will be hidden.`)) return;
     await fetch(`/api/matches/${row.id}`, { method: "DELETE" });
     load();
   }
@@ -31,19 +31,19 @@ export default function MatchesPage() {
     <>
       <div className="page-head">
         <div>
-          <h1>Matches</h1>
-          <p className="sub">People who liked you back. Newest message first.</p>
+          <h1>Your squad</h1>
+          <p className="sub">Players who want to team up with you too. Newest message first.</p>
         </div>
       </div>
       <div className="stats">
-        <div className="stat"><span className="stat-num">{rows ? rows.length : "-"}</span><span className="stat-label">Matches</span></div>
+        <div className="stat"><span className="stat-num">{rows ? rows.length : "-"}</span><span className="stat-label">Teammates</span></div>
         <div className="stat"><span className="stat-num">{rows ? chatting : "-"}</span><span className="stat-label">Chats started</span></div>
       </div>
       {rows && rows.length === 0 && (
         <div className="card empty">
-          <strong>No matches yet</strong>
-          <span className="muted">Go to Discover and like some people.</span>
-          <Link href="/" className="btn">Go to Discover</Link>
+          <strong>No teammates yet</strong>
+          <span className="muted">Go find some players and hit Team up.</span>
+          <Link href="/" className="btn">Find players</Link>
         </div>
       )}
       <div className="list">
@@ -53,15 +53,15 @@ export default function MatchesPage() {
               <Avatar name={r.other.name} color={r.other.color} size={52} />
               <div className="match-text">
                 <div className="match-top">
-                  <strong>{r.other.name}, {r.other.age}</strong>
+                  <strong>{r.other.name} <span className="muted small">@{r.other.gamertag}</span></strong>
                   {r.last && <span className="muted small">{formatTime(r.last.at)}</span>}
                 </div>
                 <div className="muted preview">
-                  {r.last ? `${r.last.from === me ? "You: " : ""}${r.last.text}` : "No messages yet. Say hi."}
+                  {r.last ? `${r.last.from === me ? "You: " : ""}${r.last.text}` : "No messages yet. Ask what they want to play."}
                 </div>
               </div>
             </Link>
-            <button className="ghost small-btn" onClick={() => unmatch(r)}>Unmatch</button>
+            <button className="ghost small-btn" onClick={() => unmatch(r)}>Remove</button>
           </div>
         ))}
       </div>

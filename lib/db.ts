@@ -5,10 +5,14 @@ import { promises as fs } from "fs";
 import path from "path";
 import seed from "@/data/seed.json";
 
+export type Edition = "Java" | "Bedrock" | "Both";
 export type Profile = {
   id: string; name: string; age: number; city: string; bio: string;
   interests: string[]; lookingFor: string; color: string;
   prompts: Prompt[];
+  // Minecraft stuff. "city" is used as the region (e.g. "US East") so people can find a good ping.
+  gamertag: string; edition: Edition; platforms: string[];
+  modes: string[]; playstyle: string; mic: boolean;
 };
 export type Prompt = { question: string; answer: string };
 export type Message = { id: string; matchId: string; from: string; text: string; at: string };

@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { cleanPrompts } from "@/lib/prompts";
 import { newId, readDb, writeDb, type Profile } from "@/lib/db";
+import { checkAge, cleanMinecraft } from "@/lib/minecraft";
 
-const COLORS = ["#4b36d9", "#d9634b", "#3f8f3a", "#c28a1c", "#2a7fb8", "#b8326f"];
+const COLORS = ["#5d9b3a", "#8b5a2b", "#3aa6b9", "#c28a1c", "#7a4fb5", "#b8326f"];
 
 export async function GET() {
   const db = await readDb();
@@ -17,8 +18,8 @@ export async function POST(req: Request) {
   if (!name || !age) {
     return NextResponse.json({ error: "Name and age are required." }, { status: 400 });
   }
-  // ZOMBIE: no 18+ check. Any age is accepted and nobody verifies it. Dating apps must
-  // block under-18s (age gate plus ID or age estimation). See ZOMBIE.md section 3.
+  const ageError = checkAge(age);
+  if (ageError) return NextResponse.json({ error: ageError }, { status: 400 });
   const db = await readDb();
   const profile: Profile = {
     id: newId(),
@@ -30,6 +31,8 @@ export async function POST(req: Request) {
     lookingFor: String(body.lookingFor ?? ""),
     color: COLORS[db.profiles.length % COLORS.length],
     prompts: cleanPrompts(body.prompts),
+    gamertag: "", edition: "Java", platforms: [], modes: [], playstyle: "Chill", mic: false,
+    ...cleanMinecraft(body),
   };
   db.profiles.push(profile);
   await writeDb(db);

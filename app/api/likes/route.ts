@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { readDb } from "@/lib/db";
+import { readDb, type Profile } from "@/lib/db";
+import { sameAgeGroup } from "@/lib/minecraft";
 
 // Everyone who liked ?me=<profile id> and is not a match yet. This is the paid "Who liked you" feature.
 // ZOMBIE: BUG. The page blurs the cards, but this response has the real names, ages, cities and
@@ -11,10 +12,12 @@ export async function GET(req: Request) {
   if (!me) return NextResponse.json({ error: "Missing ?me=" }, { status: 400 });
 
   const db = await readDb();
+  const self = db.profiles.find((p) => p.id === me);
+  if (!self) return NextResponse.json({ error: "No such profile." }, { status: 404 });
   const matched = new Set(db.matches.flatMap((m) => (m.a === me ? [m.b] : m.b === me ? [m.a] : [])));
   const fans = db.likes
     .filter((l) => l.to === me && !matched.has(l.from))
     .map((l) => db.profiles.find((p) => p.id === l.from))
-    .filter(Boolean);
+    .filter((p): p is Profile => Boolean(p) && sameAgeGroup(self, p as Profile));
   return NextResponse.json(fans);
 }

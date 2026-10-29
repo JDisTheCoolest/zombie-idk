@@ -1,5 +1,5 @@
 "use client";
-// A simple chat thread for one match.
+// A simple chat thread with one teammate.
 import Link from "next/link";
 import { use, useCallback, useEffect, useState } from "react";
 import Avatar from "@/components/Avatar";
@@ -48,15 +48,15 @@ export default function Chat({ params }: { params: Promise<{ id: string }> }) {
   }
 
   async function unmatch() {
-    if (!window.confirm("Unmatch? The chat will be hidden.")) return;
+    if (!window.confirm("Remove from your squad? The chat will be hidden.")) return;
     await fetch(`/api/matches/${id}`, { method: "DELETE" });
     load();
   }
 
-  // ZOMBIE: no block or report button here. Every dating app needs both.
+  // ZOMBIE: no block or report button here. Every app where strangers chat needs both.
   return (
     <>
-      <p style={{ margin: "0 0 12px" }}><Link href="/matches">Back to matches</Link></p>
+      <p style={{ margin: "0 0 12px" }}><Link href="/matches">Back to squad</Link></p>
       <div className="page-head">
         <div className="row">
           {other && <Avatar name={other.name} color={other.color} size={52} />}
@@ -65,14 +65,14 @@ export default function Chat({ params }: { params: Promise<{ id: string }> }) {
             <p className="sub" style={{ margin: 0 }}>Refresh the page to see new messages (not live yet).</p>
           </div>
         </div>
-        {match && !match.unmatched && <button className="ghost" onClick={unmatch}>Unmatch</button>}
+        {match && !match.unmatched && <button className="ghost" onClick={unmatch}>Remove</button>}
       </div>
       {error && <p className="error">{error}</p>}
       {match?.unmatched ? (
         <div className="card empty" style={{ maxWidth: 520 }}>
-          <strong>You unmatched this person</strong>
+          <strong>You removed this player from your squad</strong>
           <span className="muted">The chat is hidden.</span>
-          <Link href="/matches" className="btn">Back to matches</Link>
+          <Link href="/matches" className="btn">Back to squad</Link>
         </div>
       ) : (
         <div className="card stack" style={{ maxWidth: 520 }}>
@@ -82,9 +82,9 @@ export default function Chat({ params }: { params: Promise<{ id: string }> }) {
               <div className={m.from === me ? "msg-time right" : "msg-time"}>{formatTime(m.at)}</div>
             </div>
           ))}
-          {messages.length === 0 && !error && <span className="muted">Say hi.</span>}
+          {messages.length === 0 && !error && <span className="muted">Say hi and pick a mode.</span>}
           <div className="row nowrap">
-            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Write a message"
+            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Send a message (server IP, what to play...)"
               onKeyDown={(e) => e.key === "Enter" && send()} />
             <button onClick={send}>Send</button>
           </div>

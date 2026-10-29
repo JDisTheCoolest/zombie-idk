@@ -1,8 +1,8 @@
 {
-  "name": "zombie-match",
+  "name": "mine-match",
   "version": "0.1.0",
   "private": true,
-  "description": "A half-built SaaS app for the AI Builders zombie hackathon. Bring it back to life.",
+  "description": "Find people to play Minecraft with.",
   "scripts": {
     "dev": "next dev -p 3105",
     "build": "next build",

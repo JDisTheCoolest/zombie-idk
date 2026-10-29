@@ -2,12 +2,13 @@ import type { Prompt } from "@/lib/db";
 
 // The list of profile prompts people can pick from. Each profile answers 3 of them.
 export const PROMPTS = [
-  "My ideal Sunday",
+  "My dream build",
+  "My first night strategy",
   "I'm weirdly good at",
   "We'll get along if",
-  "The way to win me over is",
-  "A small thing that makes my day",
-  "My most useless skill",
+  "My worst creeper disaster",
+  "Server I keep going back to",
+  "The mod I can't play without",
 ];
 
 // A short "Oct 28, 6:07 PM" style time for lists and chat.

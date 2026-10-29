@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { readDb, writeDb } from "@/lib/db";
 import { cleanPrompts } from "@/lib/prompts";
+import { checkAge, cleanMinecraft } from "@/lib/minecraft";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -22,12 +23,17 @@ export async function PATCH(req: Request, { params }: Ctx) {
   if (!profile) return NextResponse.json({ error: "Not found." }, { status: 404 });
 
   if (typeof body.name === "string" && body.name.trim()) profile.name = body.name.trim();
-  if (body.age) profile.age = Number(body.age); // ZOMBIE: still no 18+ check on edits.
+  if (body.age) {
+    const ageError = checkAge(Number(body.age));
+    if (ageError) return NextResponse.json({ error: ageError }, { status: 400 });
+    profile.age = Number(body.age);
+  }
   if (typeof body.city === "string") profile.city = body.city;
   if (typeof body.bio === "string") profile.bio = body.bio; // ZOMBIE: no text moderation.
   if (typeof body.lookingFor === "string") profile.lookingFor = body.lookingFor;
   if (Array.isArray(body.interests)) profile.interests = body.interests.map(String);
   if (Array.isArray(body.prompts)) profile.prompts = cleanPrompts(body.prompts);
+  Object.assign(profile, cleanMinecraft(body));
 
   await writeDb(db);
   return NextResponse.json(profile);
