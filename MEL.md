@@ -1,12 +1,13 @@
 # MEL.md
 
-This is a hackathon project: Mine Match, a way to find people to play Minecraft with (survival, SMP, Bedwars, modded and more). It started as a half-built Hinge / Tinder copy, and we are turning it into a real product.
+This is a hackathon project: Miner Finder, a way to find people to play Minecraft with (survival, SMP, Bedwars, modded and more). It started as a half-built Hinge / Tinder copy, and we are turning it into a real product.
 
 ## The stack
 
 - Next.js (App Router) + TypeScript + React. Plain CSS in `app/globals.css`, no Tailwind.
-- Data: `lib/db.ts` reads and writes `data/db.json`. `data/seed.json` is the starting data (profiles, likes, passes, matches, messages). This is temporary.
-- Routes: `app/api/profiles`, `feed`, `swipe`, `likes`, `matches`, `matches/[id]` (unmatch) and `matches/[id]/messages`. Pages: Discover (`app/page.tsx`), `profile`, `matches`, `likes` (Who liked you, paid), `pricing`.
+- Data: Supabase. `lib/db.ts` has the server-only client (secret key from `SUPABASE_SECRET_KEY`) and row helpers. Tables and seed are in `supabase/setup.sql`. Skins are PNG data: URLs in `profiles.skin`, checked by `lib/skin.ts` and drawn by `components/SkinView.tsx`.
+- Landing page `app/page.tsx` with the animated world in `components/PixelWorld.tsx`. Find players is `app/find/page.tsx`, the drag gesture is `components/SwipeCard.tsx`.
+- Routes: `app/api/profiles`, `feed`, `swipe`, `likes`, `matches`, `matches/[id]` (unmatch) and `matches/[id]/messages`. Pages: Landing (`app/page.tsx`), Find players (`app/find/page.tsx`), `profile`, `matches`, `likes` (Who liked you, paid), `pricing`.
 - Minecraft fields (gamertag, edition, platforms, modes, playstyle, mic), the option lists and the age rules are in `lib/minecraft.ts`. `city` on a profile holds the region.
 - Profile prompts: the list and the clean-up helper are in `lib/prompts.ts`. `components/ProfileCard.tsx` draws a card (Discover, profile preview, blurred cards on Who liked you).
 - "Who am I" is a dropdown (`components/PretendPicker.tsx`, `lib/useMe.ts`). There are no real accounts yet.

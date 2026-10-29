@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { newId, readDb, writeDb, type Message } from "@/lib/db";
+import { db, must, toMessage } from "@/lib/db";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -9,11 +9,10 @@ type Ctx = { params: Promise<{ id: string }> };
 // ZOMBIE: this also returns messages of an UNMATCHED chat. Unmatch only hides the chat in the page.
 export async function GET(_req: Request, { params }: Ctx) {
   const { id } = await params;
-  const db = await readDb();
-  const match = db.matches.find((m) => m.id === id);
+  const match = must(await db().from("matches").select("*").eq("id", id).maybeSingle());
   if (!match) return NextResponse.json({ error: "No such match." }, { status: 404 });
-  const messages = db.messages.filter((m) => m.matchId === id);
-  return NextResponse.json({ match, messages });
+  const messages = must(await db().from("messages").select("*").eq("match_id", id).order("at"));
+  return NextResponse.json({ match, messages: messages.map(toMessage) });
 }
 
 // Send a message. Body: { from, text }
@@ -23,20 +22,15 @@ export async function POST(req: Request, { params }: Ctx) {
   const text = String(body.text ?? "").trim();
   if (!text) return NextResponse.json({ error: "Message is empty." }, { status: 400 });
 
-  const db = await readDb();
-  const match = db.matches.find((m) => m.id === id);
+  const match = must(await db().from("matches").select("*").eq("id", id).maybeSingle());
   if (!match) return NextResponse.json({ error: "No such match." }, { status: 404 });
 
   // ZOMBIE: "from" comes from the request body, so anyone can send as anyone.
   // ZOMBIE: no block or report, no spam or abuse filter on messages.
-  const message: Message = {
-    id: newId(),
-    matchId: id,
-    from: String(body.from ?? ""),
+  const row = must(await db().from("messages").insert({
+    match_id: id,
+    from_id: String(body.from ?? ""),
     text: text.slice(0, 1000),
-    at: new Date().toISOString(),
-  };
-  db.messages.push(message);
-  await writeDb(db);
-  return NextResponse.json(message, { status: 201 });
+  }).select().single());
+  return NextResponse.json(toMessage(row), { status: 201 });
 }

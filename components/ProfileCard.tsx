@@ -1,7 +1,7 @@
-// One player as a card: a blocky "skin" tile with initials, then the details.
-// ZOMBIE: no real photos or skins yet. The colored block stands in for one.
+// One player as a card: their skin standing on a colored block (or initials if they have no skin), then the details.
 import type { ReactNode } from "react";
 import type { Profile } from "@/lib/db";
+import SkinView from "@/components/SkinView";
 
 type Props = {
   profile: Profile;
@@ -20,7 +20,9 @@ export default function ProfileCard({ profile, blurred = false, compact = false,
   return (
     <div className={`profile-card${blurred ? " blurred" : ""}${compact ? " compact" : ""}`}>
       <div className="photo" style={{ "--skin": profile.color } as React.CSSProperties}>
-        <span className="initials">{initials}</span>
+        {profile.skin
+          ? <SkinView skin={profile.skin} size={compact ? 100 : 210} label={`${profile.name}'s Minecraft skin`} />
+          : <span className="initials">{initials}</span>}
         {profile.edition && <span className="edition-tag">{profile.edition === "Both" ? "Java + Bedrock" : profile.edition}</span>}
       </div>
       <div className="profile-body">

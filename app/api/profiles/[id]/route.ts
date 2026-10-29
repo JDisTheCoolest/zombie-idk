@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { readDb, writeDb } from "@/lib/db";
+import { db, getProfile, must, toProfile, toProfileRow, type Profile } from "@/lib/db";
 import { cleanPrompts } from "@/lib/prompts";
 import { checkAge, cleanMinecraft } from "@/lib/minecraft";
+import { checkSkin } from "@/lib/skin";
 
 type Ctx = { params: Promise<{ id: string }> };
 
 export async function GET(_req: Request, { params }: Ctx) {
   const { id } = await params;
-  const db = await readDb();
-  const profile = db.profiles.find((p) => p.id === id);
+  const profile = await getProfile(id);
   if (!profile) return NextResponse.json({ error: "Not found." }, { status: 404 });
   return NextResponse.json(profile);
 }
@@ -18,23 +18,30 @@ export async function GET(_req: Request, { params }: Ctx) {
 export async function PATCH(req: Request, { params }: Ctx) {
   const { id } = await params;
   const body = await req.json().catch(() => ({}));
-  const db = await readDb();
-  const profile = db.profiles.find((p) => p.id === id);
-  if (!profile) return NextResponse.json({ error: "Not found." }, { status: 404 });
+  const change: Partial<Profile> = {};
 
-  if (typeof body.name === "string" && body.name.trim()) profile.name = body.name.trim();
+  if (typeof body.name === "string" && body.name.trim()) change.name = body.name.trim().slice(0, 60);
   if (body.age) {
     const ageError = checkAge(Number(body.age));
     if (ageError) return NextResponse.json({ error: ageError }, { status: 400 });
-    profile.age = Number(body.age);
+    change.age = Number(body.age);
   }
-  if (typeof body.city === "string") profile.city = body.city;
-  if (typeof body.bio === "string") profile.bio = body.bio; // ZOMBIE: no text moderation.
-  if (typeof body.lookingFor === "string") profile.lookingFor = body.lookingFor;
-  if (Array.isArray(body.interests)) profile.interests = body.interests.map(String);
-  if (Array.isArray(body.prompts)) profile.prompts = cleanPrompts(body.prompts);
-  Object.assign(profile, cleanMinecraft(body));
+  if (typeof body.city === "string") change.city = body.city;
+  if (typeof body.bio === "string") change.bio = body.bio.slice(0, 500); // ZOMBIE: no text moderation.
+  if (typeof body.lookingFor === "string") change.lookingFor = body.lookingFor.slice(0, 200);
+  if (Array.isArray(body.interests)) change.interests = body.interests.map(String).slice(0, 10);
+  if (Array.isArray(body.prompts)) change.prompts = cleanPrompts(body.prompts);
+  Object.assign(change, cleanMinecraft(body));
+  // A skin is optional: send a PNG data: URL to set it, or null to remove it.
+  // ZOMBIE: skins are checked for size and format, but not moderated.
+  if (body.skin === null) change.skin = null;
+  else if (typeof body.skin === "string") {
+    const skinError = checkSkin(body.skin);
+    if (skinError) return NextResponse.json({ error: skinError }, { status: 400 });
+    change.skin = body.skin;
+  }
 
-  await writeDb(db);
-  return NextResponse.json(profile);
+  const row = must(await db().from("profiles").update(toProfileRow(change)).eq("id", id).select().maybeSingle());
+  if (!row) return NextResponse.json({ error: "Not found." }, { status: 404 });
+  return NextResponse.json(toProfile(row));
 }

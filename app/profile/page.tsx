@@ -2,6 +2,7 @@
 // Create a new player profile, or edit the one you are pretending to be.
 import { useEffect, useState } from "react";
 import ProfileCard from "@/components/ProfileCard";
+import SkinView from "@/components/SkinView";
 import { PROMPTS } from "@/lib/prompts";
 import { EDITIONS, MIN_AGE, MODES, PLATFORMS, PLAYSTYLES, REGIONS } from "@/lib/minecraft";
 import { setMe, useMe } from "@/lib/useMe";
@@ -18,6 +19,8 @@ export default function ProfilePage() {
   const [prompts, setPrompts] = useState<Prompt[]>(EMPTY_PROMPTS);
   const [mc, setMc] = useState(EMPTY_MC);
   const [color, setColor] = useState("#5d9b3a");
+  const [skin, setSkin] = useState<string | null>(null);
+  const [skinError, setSkinError] = useState("");
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -26,6 +29,7 @@ export default function ProfilePage() {
       setForm({ ...EMPTY, ...p, age: String(p.age), interests: (p.interests ?? []).join(", ") });
       setMc({ edition: p.edition ?? "Java", platforms: p.platforms ?? [], modes: p.modes ?? [], mic: Boolean(p.mic) });
       setColor(p.color ?? "#5d9b3a");
+      setSkin(p.skin ?? null);
       const saved: Prompt[] = p.prompts ?? [];
       setPrompts([0, 1, 2].map((i) => saved[i] ?? EMPTY_PROMPTS[i]));
     });
@@ -52,7 +56,30 @@ export default function ProfilePage() {
       interests: form.interests.split(",").map((s) => s.trim()).filter(Boolean),
       prompts,
       ...mc,
+      skin,
     };
+  }
+
+  // Read a skin file, check it in the browser first (the server checks again), and show it.
+  function pickSkin(file: File | undefined) {
+    setSkinError("");
+    if (!file) return;
+    if (file.type !== "image/png") return setSkinError("Skins must be PNG files.");
+    if (file.size > 24 * 1024) return setSkinError("That skin file is too big (24 KB max).");
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = String(reader.result);
+      const img = new Image();
+      img.onload = () => {
+        if (img.width !== 64 || (img.height !== 64 && img.height !== 32)) {
+          return setSkinError(`Skins are 64 x 64 pixels. That image is ${img.width} x ${img.height}.`);
+        }
+        setSkin(url);
+      };
+      img.onerror = () => setSkinError("Could not read that image.");
+      img.src = url;
+    };
+    reader.readAsDataURL(file);
   }
 
   async function save() {
@@ -78,7 +105,7 @@ export default function ProfilePage() {
 
   const preview = {
     id: "preview", color, name: form.name || "Your name", age: Number(form.age) || 0, city: form.city,
-    gamertag: form.gamertag, playstyle: form.playstyle, ...mc,
+    gamertag: form.gamertag, playstyle: form.playstyle, ...mc, skin,
     bio: form.bio, lookingFor: form.lookingFor, prompts: prompts.filter((p) => p.answer.trim()),
     interests: form.interests.split(",").map((s) => s.trim()).filter(Boolean),
   };
@@ -93,6 +120,21 @@ export default function ProfilePage() {
       </div>
       <div className="two-col">
         <div className="card stack">
+          <div className="skin-upload">
+            <div className="skin-slot">
+              {skin ? <SkinView skin={skin} size={96} label="Your skin" /> : <span className="muted small">No skin</span>}
+            </div>
+            <div className="stack">
+              <label>Minecraft skin (64 x 64 PNG)
+                <input type="file" accept="image/png" onChange={(e) => pickSkin(e.target.files?.[0])} />
+              </label>
+              <span className="muted small">
+                Use the same file you upload to Minecraft. Java players can download theirs from the Minecraft launcher.
+              </span>
+              {skin && <button type="button" className="ghost small-btn" style={{ justifySelf: "start" }} onClick={() => setSkin(null)}>Remove skin</button>}
+              {skinError && <span className="error">{skinError}</span>}
+            </div>
+          </div>
           <label>Name<input value={form.name} onChange={(e) => set("name", e.target.value)} /></label>
           <label>Gamertag / IGN<input value={form.gamertag} onChange={(e) => set("gamertag", e.target.value)} placeholder="Steve" /></label>
           <label>Age<input type="number" min={MIN_AGE} value={form.age} onChange={(e) => set("age", e.target.value)} /></label>
@@ -134,7 +176,10 @@ export default function ProfilePage() {
             <input type="checkbox" checked={mc.mic} onChange={(e) => setMc({ ...mc, mic: e.target.checked })} />
             I use voice chat
           </label>
-          <label>Bio<textarea rows={3} value={form.bio} onChange={(e) => set("bio", e.target.value)} /></label>
+          <label>Bio ({form.bio.length}/500)
+            <textarea rows={4} maxLength={500} value={form.bio} placeholder="What you like to play, when you're online, what kind of teammate you are"
+              onChange={(e) => set("bio", e.target.value)} />
+          </label>
           <label>Favorite things (comma separated)<input value={form.interests} placeholder="shaders, villager trading, Create mod" onChange={(e) => set("interests", e.target.value)} /></label>
           <label>Looking for<input value={form.lookingFor} placeholder="A duo for a hardcore world" onChange={(e) => set("lookingFor", e.target.value)} /></label>
           <h2 style={{ margin: "10px 0 0" }}>Prompts</h2>

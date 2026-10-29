@@ -1,6 +1,6 @@
 # 🧟 ZOMBIE.md: what's broken
 
-Mine Match started as a zombie (half-built) dating app and is being turned into a way to find people to play Minecraft with. Pick items off this list. Every box you tick gets it closer to a product players can actually use.
+Miner Finder started as a zombie (half-built) dating app and is being turned into a way to find people to play Minecraft with. Pick items off this list. Every box you tick gets it closer to a product players can actually use.
 
 Search the code for `ZOMBIE:` to find every planted problem.
 
@@ -11,7 +11,8 @@ Search the code for `ZOMBIE:` to find every planted problem.
 - [ ] Region filter (to find players with a good ping) and a playstyle filter.
 - [ ] Chat does not update live. You have to refresh. Add polling every few seconds, or websockets.
 - [ ] "Diamond invite" (the super like, a paid feature) says "not built yet". Build it, then lock it to a paid plan.
-- [ ] Avatars and card photos are colors and initials. Add skin upload or pull the player's skin from their gamertag (and read section 3 first).
+- [x] Skin upload (64 x 64 PNG, checked on the server).
+- [ ] ~~Avatars and card photos are colors and initials.~~ Add skin upload or pull the player's skin from their gamertag (and read section 3 first).
 - [ ] Unmatch is half done. It only hides the chat in the page (`app/api/matches/[id]/route.ts`). The messages are never deleted. Delete or lock them.
 - [ ] "Requests" (who wants to team up with you) is the paid feature, but nothing checks a plan. Build the plan check after Stripe works (section 4).
 - [ ] Profile prompts are not checked. Any question text is accepted, and the answers are not moderated.
@@ -30,11 +31,12 @@ Search the code for `ZOMBIE:` to find every planted problem.
 - [ ] "Requests" leaks. The page blurs the cards, but `GET /api/likes?me=...` sends the real names, ages, cities and prompts to anyone. Only send them after a paid plan is confirmed.
 - [ ] Anyone can unmatch anyone, because `DELETE /api/matches/[id]` does not check who is calling.
 - [ ] Anyone can send a message as anyone, and edit any profile, because the server trusts the id in the request.
-- [ ] No photo moderation. When you add photos, scan them for nudity and abuse before they show.
+- [ ] No skin moderation. Skins are checked for size and format, but not for rude pictures.
 - [ ] No spam or abuse filter on bios and messages.
 - [ ] Every API route trusts whatever it's sent. Validate input on the server.
-- [ ] Ids are guessable (`lib/db.ts`). Use random ids and check that the record belongs to the signed-in user.
-- [ ] Data lives in `data/db.json` on disk. Move it to a real database.
+- [x] New ids are random (Supabase makes them).
+- [ ] Check that the record belongs to the signed-in user.
+- [x] Data lives in Supabase (`supabase/setup.sql`), with row level security on so the public key can read nothing.
 
 ## 3. Make it compliant
 

@@ -251,7 +251,7 @@ th {
 .pill { background: var(--lavender); color: #3F2FB0; font-weight: 600; }
 .sub { color: var(--muted); }
 
-/* ===== Mine Match theme =====
+/* ===== Miner Finder theme =====
    Grass, dirt and stone colors, Pixelify Sans headlines, chunky "block" buttons with
    bevelled edges like the Minecraft menu. Later rules win, so this block restyles the
    app without touching the classes above it. */
@@ -350,3 +350,88 @@ label.check input { width: auto; }
 .chip { padding: 5px 10px; font-size: 13px; font-weight: 500; background: #e4e4e4; color: var(--ink); border-width: 2px; }
 button.chip:not(.on):not(:disabled):hover { background: #d4d4d4; }
 .chip.on, .chip.on:hover { background: var(--accent); color: #fff; }
+
+/* Swipe card on Find players: drag it, and a stamp fades in to show what letting go will do. */
+.swipe-card { position: relative; max-width: 440px; touch-action: pan-y; cursor: grab; user-select: none; }
+.swipe-card.dragging { cursor: grabbing; }
+.swipe-card .profile-card { max-width: none; }
+.stamp {
+  position: absolute; top: 40px; z-index: 2; pointer-events: none;
+  font: 700 30px/1 'Pixelify Sans', sans-serif; text-transform: uppercase;
+  padding: 8px 14px; border: 4px solid currentColor; border-radius: 6px; background: rgba(255,255,255,.85);
+}
+.stamp-yes { left: 20px; color: var(--accent); transform: rotate(-14deg); }
+.stamp-no { right: 20px; color: #c2372f; transform: rotate(14deg); }
+
+/* ===== Landing page ===== */
+.landing { display: grid; gap: 40px; }
+.hero { position: relative; isolation: isolate; text-align: center; padding: 48px 8px 8px; display: grid; justify-items: center; gap: 14px; }
+.eyebrow { margin: 0; font: 600 12px/1 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-dark); }
+.hero-title { font-size: clamp(48px, 11vw, 104px); line-height: .95; margin: 0; color: var(--ink); text-shadow: 5px 5px 0 var(--accent), 9px 9px 0 rgba(29,36,22,.18); }
+.hero-letter { display: inline-block; animation: letter-drop .7s cubic-bezier(.2, 1.6, .4, 1) both; }
+.hero-sub { max-width: 620px; font-size: 18px; color: var(--muted); margin: 0; }
+.hero-cta { justify-content: center; margin-top: 6px; }
+.btn.big { font-size: 17px; padding: 13px 22px; }
+.rise { animation: rise .7s ease-out both; }
+
+/* Blocks floating around the hero */
+.floater { position: absolute; z-index: -1; animation: float 6s ease-in-out infinite; box-shadow: inset -4px -4px 0 rgba(0,0,0,.22), inset 4px 4px 0 rgba(255,255,255,.2); image-rendering: pixelated; }
+.block-grass { background: linear-gradient(#5fa83a 0 30%, #8b5a2b 30%); }
+.block-stone { background: #8a8a8a; }
+.block-diamond { background: radial-gradient(circle at 30% 35%, #2fd6e0 0 14%, transparent 15%), radial-gradient(circle at 70% 65%, #2fd6e0 0 14%, transparent 15%), #8a8a8a; }
+.block-gold { background: radial-gradient(circle at 35% 60%, #ffd23f 0 15%, transparent 16%), radial-gradient(circle at 68% 30%, #ffd23f 0 12%, transparent 13%), #8a8a8a; }
+.block-tnt { background: linear-gradient(#d33 0 35%, #eee 35% 65%, #d33 65%); }
+
+/* The animated world */
+.world-frame { border: 4px solid var(--ink); border-radius: 8px; overflow: hidden; box-shadow: 0 8px 0 rgba(29,36,22,.25); background: #6fbff0; }
+.pixel-world { display: block; width: 100%; height: clamp(260px, 42vw, 420px); }
+
+/* Modes marquee */
+.marquee { overflow: hidden; display: grid; gap: 10px; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.marquee-track { display: flex; gap: 10px; width: max-content; animation: marquee 32s linear infinite; }
+.marquee-track.reverse { animation-direction: reverse; animation-duration: 38s; }
+.marquee .pill { font-size: 15px; padding: 6px 14px; }
+
+/* How it works */
+.section-title { text-align: center; font-size: 32px; margin: 0 0 18px; }
+.steps-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.step { display: grid; gap: 6px; height: 100%; transition: transform .2s ease, box-shadow .2s ease; }
+.step:hover { transform: translateY(-6px); box-shadow: 0 10px 0 var(--line); }
+.step p { margin: 0; }
+.step-icon { font-size: 34px; width: 56px; height: 56px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid var(--ink); border-radius: 6px; animation: bob 2.6s ease-in-out infinite; }
+.step-num { font: 600 11px/1 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-dark); margin-top: 6px; }
+.steps-grid > :nth-child(2) .step-icon { animation-delay: .4s; }
+.steps-grid > :nth-child(3) .step-icon { animation-delay: .8s; }
+
+.safety { display: flex; gap: 18px; align-items: center; }
+.safety h2 { margin: 0 0 6px; }
+.safety p { margin: 0; }
+.safety-icon { font-size: 44px; animation: bob 3s ease-in-out infinite; }
+.final-cta { text-align: center; display: grid; justify-items: center; gap: 14px; padding: 24px 0 8px; }
+.final-cta h2 { font-size: 30px; margin: 0; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes letter-drop { from { opacity: 0; transform: translateY(-60px) rotate(-12deg); } to { opacity: 1; transform: none; } }
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-18px) rotate(6deg); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-letter, .rise, .floater, .marquee-track, .step-icon, .safety-icon { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+@media (max-width: 560px) {
+  .safety { flex-direction: column; text-align: center; }
+  .floater { display: none; }
+}
+
+/* Skins */
+.skin-view { display: block; filter: drop-shadow(6px 6px 0 rgba(0,0,0,.28)); }
+.profile-card .photo .skin-view { margin-top: 18px; }
+.skin-upload { display: flex; gap: 14px; align-items: center; }
+.skin-upload .skin-slot { width: 64px; height: 110px; display: grid; place-items: center; background: #f3f5ee; border: 2px dashed var(--line); border-radius: 4px; }
+.skin-upload input[type="file"] { width: auto; border: 0; padding: 0; background: none; }

@@ -43,14 +43,14 @@ export default function MatchesPage() {
         <div className="card empty">
           <strong>No teammates yet</strong>
           <span className="muted">Go find some players and hit Team up.</span>
-          <Link href="/" className="btn">Find players</Link>
+          <Link href="/find" className="btn">Find players</Link>
         </div>
       )}
       <div className="list">
         {rows?.map((r) => (
           <div key={r.id} className="card match-row">
             <Link href={`/matches/${r.id}`} className="match-main">
-              <Avatar name={r.other.name} color={r.other.color} size={52} />
+              <Avatar name={r.other.name} color={r.other.color} skin={r.other.skin} size={52} />
               <div className="match-text">
                 <div className="match-top">
                   <strong>{r.other.name} <span className="muted small">@{r.other.gamertag}</span></strong>

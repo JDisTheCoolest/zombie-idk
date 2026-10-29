@@ -52,6 +52,6 @@ export function cleanMinecraft(body: Record<string, unknown>): Partial<Profile> 
 // and parental consent rules for teens (see ZOMBIE.md section 3).
 export function checkAge(age: number): string | null {
   if (!Number.isInteger(age) || age < 1 || age > 120) return "Enter a real age.";
-  if (age < MIN_AGE) return `You need to be ${MIN_AGE} or older to use Mine Match.`;
+  if (age < MIN_AGE) return `You need to be ${MIN_AGE} or older to use Miner Finder.`;
   return null;
 }

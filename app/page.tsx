@@ -1,88 +1,93 @@
-"use client";
-// Discover: one player at a time. Team up, Skip or send a Diamond invite.
-import { useCallback, useEffect, useState } from "react";
-import ProfileCard from "@/components/ProfileCard";
-import { useMe } from "@/lib/useMe";
+// Landing page: what Miner Finder is, with the animated world up top.
+import Link from "next/link";
+import PixelWorld from "@/components/PixelWorld";
+import Reveal from "@/components/Reveal";
 import { MODES } from "@/lib/minecraft";
-import type { Profile } from "@/lib/db";
 
-export default function Discover() {
-  const me = useMe();
-  const [self, setSelf] = useState<Profile | null>(null);
-  const [feed, setFeed] = useState<Profile[]>([]);
-  const [note, setNote] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [mode, setMode] = useState("");
-  const [crossplay, setCrossplay] = useState(false);
+const STEPS = [
+  { icon: "🪪", title: "Make your player card", text: "Upload your skin, add your gamertag, edition, platforms, the modes you love, and a short bio." },
+  { icon: "↔", title: "Swipe through players", text: "Swipe right to team up, left to skip. Players who share the most modes with you show up first." },
+  { icon: "💎", title: "Team up and play", text: "When you both swipe right, you join each other's squad. Chat, share a server IP, and hop on." },
+];
 
-  const load = useCallback(async () => {
-    if (!me) return;
-    const query = new URLSearchParams({ me });
-    if (mode) query.set("mode", mode);
-    if (crossplay) query.set("crossplay", "1");
-    const [feedRes, selfRes] = await Promise.all([fetch(`/api/feed?${query}`), fetch(`/api/profiles/${me}`)]);
-    setFeed(feedRes.ok ? await feedRes.json() : []);
-    setSelf(selfRes.ok ? await selfRes.json() : null);
-    setLoaded(true);
-  }, [me, mode, crossplay]);
+const FLOATERS = [
+  { kind: "grass", left: "6%", top: "18%", size: 46, delay: 0 },
+  { kind: "diamond", left: "88%", top: "12%", size: 38, delay: 1.2 },
+  { kind: "gold", left: "80%", top: "62%", size: 30, delay: 2.1 },
+  { kind: "stone", left: "12%", top: "70%", size: 34, delay: 0.6 },
+  { kind: "tnt", left: "50%", top: "4%", size: 26, delay: 1.7 },
+];
 
-  useEffect(() => { load(); }, [load]);
-
-  async function swipe(action: "like" | "pass" | "super") {
-    const card = feed[0];
-    if (!card || !me) return;
-    const res = await fetch("/api/swipe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ me, target: card.id, action }),
-    });
-    const data = await res.json();
-    if (!res.ok) { setNote(data.error); return; } // e.g. Diamond invite: not built yet
-    setNote(data.matched && action === "like" ? `You and ${card.name} want to team up! Check your Squad.` : "");
-    setFeed(feed.slice(1));
-  }
-
-  const card = feed[0];
-  const common = card && self ? self.modes.filter((m) => card.modes.includes(m)) : [];
+export default function Landing() {
   return (
-    <>
-      <div className="page-head">
-        <div>
-          <h1>Find players</h1>
-          <p className="sub">Team up or skip. If you both team up, you join each other&apos;s squad and can chat.</p>
+    <div className="landing">
+      <section className="hero">
+        {FLOATERS.map((f) => (
+          <span key={f.kind} className={`floater block-${f.kind}`} aria-hidden="true"
+            style={{ left: f.left, top: f.top, width: f.size, height: f.size, animationDelay: `${f.delay}s` }} />
+        ))}
+        <p className="eyebrow rise" style={{ animationDelay: "0ms" }}>Java · Bedrock · every platform</p>
+        <h1 className="hero-title rise" style={{ animationDelay: "120ms" }}>
+          {"Miner Finder".split("").map((ch, i) => (
+            <span key={i} className="hero-letter" style={{ animationDelay: `${300 + i * 60}ms` }}>{ch === " " ? " " : ch}</span>
+          ))}
+        </h1>
+        <p className="hero-sub rise" style={{ animationDelay: "260ms" }}>
+          Stop playing alone. Find people to play Minecraft with: survival partners, SMP crews, Bedwars squads, modded teams and builders.
+        </p>
+        <div className="row hero-cta rise" style={{ animationDelay: "400ms" }}>
+          <Link href="/find" className="btn big">Start finding players</Link>
+          <Link href="/profile" className="btn ghost big">Make your player card</Link>
         </div>
+      </section>
+
+      <div className="world-frame rise" style={{ animationDelay: "550ms" }}>
+        <PixelWorld />
       </div>
-      <div className="filters card">
-        <label>Mode
-          <select value={mode} onChange={(e) => setMode(e.target.value)}>
-            <option value="">Any mode</option>
-            {MODES.map((m) => <option key={m} value={m}>{m}</option>)}
-          </select>
-        </label>
-        <label className="check">
-          <input type="checkbox" checked={crossplay} onChange={(e) => setCrossplay(e.target.checked)} />
-          Only players I can join{self ? ` (${self.edition === "Both" ? "Java + Bedrock" : self.edition})` : ""}
-        </label>
-      </div>
-      <div className="stats">
-        <div className="stat"><span className="stat-num">{loaded ? feed.length : "-"}</span><span className="stat-label">Players to see</span></div>
-      </div>
-      {!loaded && <p className="muted">Loading chunks...</p>}
-      {loaded && !card && (
-        <div className="card empty">
-          <strong>No players left to show</strong>
-          <span className="muted">Try a different mode filter, or switch who you are with the dropdown at the top.</span>
+
+      <section className="marquee" aria-label="Modes you can find players for">
+        {[0, 1].map((row) => (
+          <div key={row} className={`marquee-track${row ? " reverse" : ""}`}>
+            {[...MODES, ...MODES].map((m, i) => <span key={i} className="pill mode">{m}</span>)}
+          </div>
+        ))}
+      </section>
+
+      <section className="steps">
+        <Reveal><h2 className="section-title">How it works</h2></Reveal>
+        <div className="steps-grid">
+          {STEPS.map((s, i) => (
+            <Reveal key={s.title} delay={i * 140}>
+              <div className="card step">
+                <span className="step-icon" aria-hidden="true">{s.icon}</span>
+                <span className="step-num">Step {i + 1}</span>
+                <strong>{s.title}</strong>
+                <p className="muted">{s.text}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
-      )}
-      {card && (
-        <ProfileCard profile={card} common={common}>
-          <button className="ghost" onClick={() => swipe("pass")}>Skip</button>
-          {/* ZOMBIE: Diamond invite is the paid feature. It is not built and not locked to a plan. */}
-          <button className="ghost diamond" onClick={() => swipe("super")}>💎 Diamond</button>
-          <button onClick={() => swipe("like")}>Team up</button>
-        </ProfileCard>
-      )}
-      {note && <p className="note">{note}</p>}
-    </>
+      </section>
+
+      <Reveal>
+        <section className="card safety">
+          <div className="safety-icon" aria-hidden="true">🛡</div>
+          <div>
+            <h2>Safe by design</h2>
+            <p className="muted">
+              You must be 13 or older. Players under 18 only ever see other players under 18, and adults only see adults.
+              That is checked on our server, not just in the page.
+            </p>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal>
+        <section className="final-cta">
+          <h2>Your next teammate is one swipe away</h2>
+          <Link href="/find" className="btn big">Find players now</Link>
+        </section>
+      </Reveal>
+    </div>
   );
 }

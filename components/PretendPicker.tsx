@@ -10,7 +10,7 @@ export default function PretendPicker() {
   const [people, setPeople] = useState<Option[]>([]);
 
   useEffect(() => {
-    fetch("/api/profiles").then((r) => r.json()).then((list: Option[]) => {
+    fetch("/api/profiles").then((r) => (r.ok ? r.json() : [])).catch(() => []).then((list: Option[]) => {
       setPeople(list);
       // First visit: pretend to be the first profile.
       if (!localStorage.getItem("zombie-match-me") && list[0]) setMe(list[0].id);

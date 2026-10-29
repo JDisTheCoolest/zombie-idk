@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readDb, writeDb } from "@/lib/db";
+import { db, must } from "@/lib/db";
 
 type Ctx = { params: Promise<{ id: string }> };
 
@@ -9,10 +9,7 @@ type Ctx = { params: Promise<{ id: string }> };
 // unmatching. Fix: delete or lock the messages, and check the signed-in user is in the match.
 export async function DELETE(_req: Request, { params }: Ctx) {
   const { id } = await params;
-  const db = await readDb();
-  const match = db.matches.find((m) => m.id === id);
-  if (!match) return NextResponse.json({ error: "No such match." }, { status: 404 });
-  match.unmatched = true;
-  await writeDb(db);
+  const row = must(await db().from("matches").update({ unmatched: true }).eq("id", id).select().maybeSingle());
+  if (!row) return NextResponse.json({ error: "No such match." }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

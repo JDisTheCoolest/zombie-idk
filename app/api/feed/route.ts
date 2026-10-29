@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { readDb } from "@/lib/db";
-import { canCrossPlay, sameAgeGroup, sharedModes } from "@/lib/minecraft";
+import { db, getProfile, matchesOf, must, otherIn, toProfile } from "@/lib/db";
+import { canCrossPlay, sharedModes } from "@/lib/minecraft";
 
 // The discover feed for ?me=<profile id>.
 // Optional filters: &mode=<mode> (they play that mode) and &crossplay=1 (their edition works with mine).
@@ -11,20 +11,29 @@ export async function GET(req: Request) {
   const mode = params.get("mode");
   const crossplay = params.get("crossplay") === "1";
 
-  const db = await readDb();
-  const self = db.profiles.find((p) => p.id === me);
+  const self = await getProfile(me);
   if (!self) return NextResponse.json({ error: "No such profile." }, { status: 404 });
 
+  // Teens only see teens and adults only see adults.
+  let query = db().from("profiles").select("*").neq("id", me);
+  query = self.age >= 18 ? query.gte("age", 18) : query.lt("age", 18);
+  if (mode) query = query.contains("modes", [mode]);
+
+  const [people, likes, passes, matches] = await Promise.all([
+    query,
+    db().from("likes").select("to_id").eq("from_id", me),
+    db().from("passes").select("to_id").eq("from_id", me),
+    matchesOf(me),
+  ]);
   const seen = new Set([
-    ...db.likes.filter((l) => l.from === me).map((l) => l.to),
-    ...db.passes.filter((l) => l.from === me).map((l) => l.to),
-    ...db.matches.flatMap((m) => (m.a === me ? [m.b] : m.b === me ? [m.a] : [])),
+    ...must(likes).map((l) => l.to_id),
+    ...must(passes).map((l) => l.to_id),
+    ...matches.map((m) => otherIn(m, me)),
   ]);
 
-  // Teens only see teens and adults only see adults. Most modes in common come first.
-  const feed = db.profiles
-    .filter((p) => p.id !== me && !seen.has(p.id) && sameAgeGroup(self, p))
-    .filter((p) => !mode || p.modes.includes(mode))
+  // Most modes in common come first.
+  const feed = must(people).map(toProfile)
+    .filter((p) => !seen.has(p.id))
     .filter((p) => !crossplay || canCrossPlay(self.edition, p.edition))
     .sort((a, b) => sharedModes(self, b).length - sharedModes(self, a).length);
   return NextResponse.json(feed);

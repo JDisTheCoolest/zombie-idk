@@ -59,7 +59,7 @@ export default function Chat({ params }: { params: Promise<{ id: string }> }) {
       <p style={{ margin: "0 0 12px" }}><Link href="/matches">Back to squad</Link></p>
       <div className="page-head">
         <div className="row">
-          {other && <Avatar name={other.name} color={other.color} size={52} />}
+          {other && <Avatar name={other.name} color={other.color} skin={other.skin} size={52} />}
           <div>
             <h1>{other ? other.name : "Chat"}</h1>
             <p className="sub" style={{ margin: 0 }}>Refresh the page to see new messages (not live yet).</p>
